@@ -95,7 +95,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularFrontend", policy =>
     {
-        policy.allowAnyOrigin()        /*.WithOrigins("http://localhost:4200")*/
+        policy.AllowAnyOrigin()        /*.WithOrigins("http://localhost:4200")*/
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials(); // facultatif
