@@ -1,0 +1,6 @@
+@abaBackOffice_HostAddress = http://localhost:5274
+
+GET {{abaBackOffice_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
