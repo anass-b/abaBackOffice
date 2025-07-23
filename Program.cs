@@ -63,7 +63,7 @@ builder.Services.AddScoped<IVideoRepository, VideoRepository>();
 // Register Unit of Work
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-// JWT Authentication (optional – uncomment if needed)
+// JWT Authentication (optional ï¿½ uncomment if needed)
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -95,7 +95,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:4200")
+        policy.allowAnyOrigin()        /*.WithOrigins("http://localhost:4200")*/
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials(); // facultatif
