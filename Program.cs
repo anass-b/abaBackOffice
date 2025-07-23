@@ -97,8 +97,8 @@ builder.Services.AddCors(options =>
     {
         policy.AllowAnyOrigin()        /*.WithOrigins("http://localhost:4200")*/
               .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials(); // facultatif
+              .AllowAnyMethod();
+              //.AllowCredentials(); // facultatif
     });
 });
 
