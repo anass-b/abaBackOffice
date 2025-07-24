@@ -53,11 +53,9 @@ namespace abaBackOffice.Services
         {
             try
             {
-                // 📁 1. Gérer le fichier si présent
                 if (dto.File != null && dto.File.Length > 0)
                 {
                     var uploadsFolder = Path.Combine("wwwroot", "uploads", "documents");
-
                     if (!Directory.Exists(uploadsFolder))
                         Directory.CreateDirectory(uploadsFolder);
 
@@ -69,17 +67,9 @@ namespace abaBackOffice.Services
                         await dto.File.CopyToAsync(stream);
                     }
 
-                    // 🔗 Générer FileUrl relatif
                     dto.FileUrl = $"/uploads/documents/{uniqueFileName}";
                 }
 
-                // 📂 2. Stocker le nom des catégories (si envoyées comme tableau JSON)
-                if (!string.IsNullOrWhiteSpace(dto.Category))
-                {
-                    dto.Category = dto.Category.Replace("[", "").Replace("]", "").Replace("\"", "");
-                }
-
-                // 💾 3. Sauvegarder en base
                 var entity = _mapper.Map<Document>(dto);
                 await _unitOfWork.DocumentRepository.CreateAsync(entity);
                 await _unitOfWork.CommitAsync();
@@ -92,6 +82,7 @@ namespace abaBackOffice.Services
                 throw;
             }
         }
+
 
 
         public async Task<DocumentDto> UpdateAsync(DocumentDto dto)
