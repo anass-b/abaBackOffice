@@ -55,7 +55,7 @@ namespace abaBackOffice.Infrastructure
             ILogger<OtpCodeRepository> otpCodeLogger,
             ILogger<ReinforcementProgramRepository> reinforcementProgramLogger,
             ILogger<ReinforcerAgentRepository> reinforcerAgentLogger,
-            ILogger<CategoryRepository> reinforcerAgentLogger
+            ILogger<CategoryRepository> categoryLogger
         )
         {
             _context = context;
@@ -70,7 +70,7 @@ namespace abaBackOffice.Infrastructure
             _blogCommentLogger = blogCommentLogger;
             _otpCodeLogger = otpCodeLogger;
             _reinforcementProgramLogger = reinforcementProgramLogger;
-            _reinforcerAgentLogger = categoryLogger;
+            _categoryLogger = categoryLogger;
         }
 
         public IUserRepository UserRepository => _userRepository ??= new UserRepository(_context, _userLogger);
