@@ -95,10 +95,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularFrontend", policy =>
     {
-        policy.AllowAnyOrigin()        /*.WithOrigins("http://localhost:4200")*/
+        policy.WithOrigins("http://localhost:4200","https://abafrontoffice.onrender.com")
               .AllowAnyHeader()
-              .AllowAnyMethod();
-              //.AllowCredentials(); // facultatif
+              .AllowAnyMethod()
+              .AllowCredentials(); // facultatif
     });
 });
 
