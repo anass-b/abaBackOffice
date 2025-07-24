@@ -27,6 +27,7 @@ namespace abaBackOffice.DataAccessLayer
         public DbSet<BlogComment> BlogComments { get; set; }
         public DbSet<ReinforcementProgram> ReinforcementPrograms { get; set; }
         public DbSet<ReinforcerAgent> ReinforcerAgents { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,6 +44,7 @@ namespace abaBackOffice.DataAccessLayer
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<BlogComment>());
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<ReinforcementProgram>());
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<ReinforcerAgent>());
+            modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<Category>());
 
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {

@@ -20,6 +20,8 @@ namespace abaBackOffice.Helpers
             CreateMap<BlogComment, BlogCommentDto>().ReverseMap();
             CreateMap<ReinforcementProgram, ReinforcementProgramDto>().ReverseMap();
             CreateMap<ReinforcerAgent, ReinforcerAgentDto>().ReverseMap();
+            CreateMap<Category, CategoryDto>().ReverseMap();
+
         }
     }
 }

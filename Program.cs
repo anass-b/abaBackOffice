@@ -46,6 +46,7 @@ builder.Services.AddScoped<IReinforcerAgentService, ReinforcerAgentService>();
 builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IVideoService, VideoService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 // Register Repositories
 builder.Services.AddScoped<IAbllsTaskRepository, AbllsTaskRepository>();
@@ -59,6 +60,7 @@ builder.Services.AddScoped<IReinforcerAgentRepository, ReinforcerAgentRepository
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IVideoRepository, VideoRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 // Register Unit of Work
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

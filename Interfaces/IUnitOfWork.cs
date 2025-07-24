@@ -17,6 +17,7 @@ namespace abaBackOffice.Interfaces
         IReinforcementProgramRepository ReinforcementProgramRepository { get; }
         IReinforcerAgentRepository ReinforcerAgentRepository { get; }
         IOtpCodeRepository OtpCodeRepository { get; }
+        ICategoryRepository CategoryRepository { get; }
 
         Task CommitAsync();
         Task RollbackAsync();

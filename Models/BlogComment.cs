@@ -12,11 +12,11 @@ namespace abaBackOffice.Models
         [Column("id")]
         public int Id { get; set; }
 
-        [Column("postid")]
+        [Column("post_id")]
         public int PostId { get; set; }
         public BlogPost Post { get; set; }
 
-        [Column("userid")]
+        [Column("user_id")]
         public int? UserId { get; set; }
         public User User { get; set; }
 

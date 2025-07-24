@@ -24,6 +24,7 @@ namespace abaBackOffice.Infrastructure
         private readonly ILogger<OtpCodeRepository> _otpCodeLogger;
         private readonly ILogger<ReinforcementProgramRepository> _reinforcementProgramLogger;
         private readonly ILogger<ReinforcerAgentRepository> _reinforcerAgentLogger;
+        private readonly ILogger<CategoryRepository> _categoryLogger;
 
         private IUserRepository _userRepository;
         private IDocumentRepository _documentRepository;
@@ -36,6 +37,7 @@ namespace abaBackOffice.Infrastructure
         private IOtpCodeRepository _otpCodeRepository;
         private IReinforcementProgramRepository _reinforcementProgramRepository;
         private IReinforcerAgentRepository _reinforcerAgentRepository;
+        private ICategoryRepository _categoryRepository;
 
         private IDbContextTransaction _transaction;
 
@@ -52,7 +54,8 @@ namespace abaBackOffice.Infrastructure
             ILogger<BlogCommentRepository> blogCommentLogger,
             ILogger<OtpCodeRepository> otpCodeLogger,
             ILogger<ReinforcementProgramRepository> reinforcementProgramLogger,
-            ILogger<ReinforcerAgentRepository> reinforcerAgentLogger
+            ILogger<ReinforcerAgentRepository> reinforcerAgentLogger,
+            ILogger<CategoryRepository> reinforcerAgentLogger
         )
         {
             _context = context;
@@ -67,7 +70,7 @@ namespace abaBackOffice.Infrastructure
             _blogCommentLogger = blogCommentLogger;
             _otpCodeLogger = otpCodeLogger;
             _reinforcementProgramLogger = reinforcementProgramLogger;
-            _reinforcerAgentLogger = reinforcerAgentLogger;
+            _reinforcerAgentLogger = categoryLogger;
         }
 
         public IUserRepository UserRepository => _userRepository ??= new UserRepository(_context, _userLogger);
@@ -81,6 +84,7 @@ namespace abaBackOffice.Infrastructure
         public IOtpCodeRepository OtpCodeRepository => _otpCodeRepository ??= new OtpCodeRepository(_context, _otpCodeLogger);
         public IReinforcementProgramRepository ReinforcementProgramRepository => _reinforcementProgramRepository ??= new ReinforcementProgramRepository(_context, _reinforcementProgramLogger);
         public IReinforcerAgentRepository ReinforcerAgentRepository => _reinforcerAgentRepository ??= new ReinforcerAgentRepository(_context, _reinforcerAgentLogger);
+        public ICategoryRepository CategoryRepository => _categoryRepository ??= new CategoryRepository(_context, _categoryLogger);
 
         public async Task BeginTransactionAsync()
         {

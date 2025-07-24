@@ -20,9 +20,9 @@ namespace abaBackOffice.Models
         [Column("description")]
         public string Description { get; set; }
 
-        [MaxLength(100)]
-        [Column("category")]
-        public string Category { get; set; }
+        [Column("categories", TypeName = "text[]")]
+        public List<string>? Categories { get; set; }
+
 
         [Column("fileurl")]
         public string FileUrl { get; set; }
