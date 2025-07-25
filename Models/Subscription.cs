@@ -13,7 +13,7 @@ namespace abaBackOffice.Models
         public int Id { get; set; }
 
         [Required]
-        [Column("userid")]
+        [Column("user_id")]
         public int UserId { get; set; }
         public User User { get; set; }
 
