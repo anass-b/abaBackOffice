@@ -1,5 +1,6 @@
-﻿using abaBackOffice.Interfaces.Services;
-using abaBackOffice.DTOs;
+﻿using abaBackOffice.DTOs;
+using abaBackOffice.Interfaces.Services;
+using abaBackOffice.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -38,6 +39,19 @@ namespace abaBackOffice.Controllers
             }
             return Ok(subscription);
         }
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetByUserId(int userId)
+        {
+            _logger.LogInformation($"Retrieving subscription with user id {userId}");
+            var subscriptions = await _subscriptionService.GetByIdAsync(userId);
+            if (subscriptions == null)
+            {
+                _logger.LogWarning($"Subscription with user id {userId} not found");
+                return NotFound();
+            }
+            return Ok(subscriptions);
+        }
+
 
         [HttpPost]
         public async Task<ActionResult<SubscriptionDto>> CreateSubscription(SubscriptionDto subscriptionDto)
