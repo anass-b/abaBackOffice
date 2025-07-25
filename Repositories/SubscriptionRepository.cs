@@ -46,6 +46,23 @@ namespace abaBackOffice.Repositories
                 throw;
             }
         }
+        public async Task<IEnumerable<Subscription>> GetAllByUserIdAsync(int userId)
+        {
+            try
+            {
+                return await _context.Subscriptions
+               .Where(s => s.UserId == userId)
+               .OrderByDescending(s => s.StartDate)
+               .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error retrieving subscription with user id {userId} from database");
+                throw;
+            }
+           
+        }
+
 
         public async Task CreateAsync(Subscription subscription)
         {

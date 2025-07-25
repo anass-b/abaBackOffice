@@ -6,6 +6,7 @@ namespace abaBackOffice.Interfaces.Repositories
     {
         Task<IEnumerable<Subscription>> GetAllAsync();
         Task<Subscription?> GetByIdAsync(int id);
+        Task<IEnumerable<Subscription>> GetAllByUserIdAsync(int userId);
         Task CreateAsync(Subscription entity);
         Task UpdateAsync(Subscription entity);
         Task DeleteAsync(int id);

@@ -6,6 +6,7 @@ namespace abaBackOffice.Interfaces.Services
     {
         Task<IEnumerable<SubscriptionDto>> GetAllAsync();
         Task<SubscriptionDto> GetByIdAsync(int id);
+        Task<IEnumerable<SubscriptionDto>> GetByUserIdAsync(int userId);
         Task<SubscriptionDto> CreateAsync(SubscriptionDto subscriptionDto);
         Task<SubscriptionDto> UpdateAsync(SubscriptionDto subscriptionDto);
         Task DeleteAsync(int id);

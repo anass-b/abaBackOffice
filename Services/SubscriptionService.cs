@@ -48,6 +48,21 @@ namespace abaBackOffice.Services
                 throw;
             }
         }
+        public async Task<IEnumerable<SubscriptionDto>> GetByUserIdAsync(int userId)
+        {
+            try
+            {
+                var subs = await _unitOfWork.SubscriptionRepository.GetByIdAsync(userId);
+                return _mapper.Map<IEnumerable<SubscriptionDto>>(subs);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error retrieving subscription with user id {userId}");
+                throw;
+            }
+            
+        }
+
 
         public async Task<SubscriptionDto> CreateAsync(SubscriptionDto dto)
         {
