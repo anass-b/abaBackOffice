@@ -69,5 +69,38 @@ namespace abaBackOffice.Controllers
             await _documentService.DeleteAsync(id);
             return NoContent();
         }
+        [HttpGet("stream/{id}")]
+        public async Task<IActionResult> StreamDocument(int id)
+        {
+            var document = await _documentService.GetByIdAsync(id);
+            if (document == null || string.IsNullOrEmpty(document.FileUrl))
+                return NotFound();
+
+            var relativePath = document.FileUrl.TrimStart('/');
+            var filePath = Path.Combine("wwwroot", relativePath);
+
+            if (!System.IO.File.Exists(filePath))
+                return NotFound();
+
+            var mime = GetMimeType(filePath);
+            var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+
+            Response.Headers.Add("Content-Disposition", "inline; filename=" + Path.GetFileName(filePath));
+            return File(stream, mime);
+        }
+
+        private string GetMimeType(string filePath)
+        {
+            var ext = Path.GetExtension(filePath).ToLowerInvariant();
+            return ext switch
+            {
+                ".pdf" => "application/pdf",
+                ".doc" => "application/msword",
+                ".docx" => "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                ".txt" => "text/plain",
+                _ => "application/octet-stream"
+            };
+        }
+
     }
 }
