@@ -101,6 +101,8 @@ namespace abaBackOffice.Services
                 // 📎 Association MaterialPhotoIds
                 if (dto.MaterialPhotoIds != null && dto.MaterialPhotoIds.Any())
                 {
+                    _logger.LogInformation("⛓ MaterialPhotoIds liés au critère : {@MaterialPhotoIds}", dto.MaterialPhotoIds);
+
                     foreach (var materialId in dto.MaterialPhotoIds)
                     {
                         var link = new EvaluationCriteriaMaterial
@@ -111,16 +113,21 @@ namespace abaBackOffice.Services
                         await _unitOfWork.EvaluationCriteriaMaterialRepository.CreateAsync(link);
                     }
                 }
+                else
+                {
+                    _logger.LogWarning("⚠️ Aucun MaterialPhotoId fourni pour le critère avec label : {Label}", dto.Label);
+                }
 
                 await _unitOfWork.CommitAsync();
                 return _mapper.Map<EvaluationCriteriaDto>(entity);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error creating EvaluationCriteria");
+                _logger.LogError(ex, "❌ Erreur lors de la création de EvaluationCriteria");
                 throw;
             }
         }
+
 
 
         public async Task<EvaluationCriteriaDto> UpdateAsync(EvaluationCriteriaDto dto)
