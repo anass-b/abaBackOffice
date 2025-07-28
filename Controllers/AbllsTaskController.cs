@@ -30,17 +30,20 @@ namespace abaBackOffice.Controllers
         public async Task<ActionResult<AbllsTaskDto>> GetTaskById(int id)
         {
             _logger.LogInformation($"Retrieving ABLLS task with id {id}");
-            var task = await _abllsTaskService.GetByIdAsync(id);
-            if (task == null)
+            try
+            {
+                var task = await _abllsTaskService.GetByIdAsync(id);
+                return Ok(task);
+            }
+            catch (KeyNotFoundException)
             {
                 _logger.LogWarning($"ABLLS task with id {id} not found");
                 return NotFound();
             }
-            return Ok(task);
         }
 
         [HttpPost]
-        public async Task<ActionResult<AbllsTaskDto>> CreateTask(AbllsTaskDto abllsTaskDto)
+        public async Task<ActionResult<AbllsTaskDto>> CreateTask([FromForm] AbllsTaskDto abllsTaskDto)
         {
             _logger.LogInformation("Creating a new ABLLS task");
             var createdTask = await _abllsTaskService.CreateAsync(abllsTaskDto);
@@ -48,12 +51,12 @@ namespace abaBackOffice.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateTask(int id, AbllsTaskDto abllsTaskDto)
+        public async Task<IActionResult> UpdateTask(int id, [FromForm] AbllsTaskDto abllsTaskDto)
         {
             if (id != abllsTaskDto.Id)
             {
                 _logger.LogWarning("ABLLS task ID mismatch");
-                return BadRequest();
+                return BadRequest("Task ID mismatch");
             }
 
             _logger.LogInformation($"Updating ABLLS task with id {id}");

@@ -11,13 +11,16 @@ namespace abaBackOffice.Interfaces
         ISubscriptionRepository SubscriptionRepository { get; }
         IVideoRepository VideoRepository { get; }
         IAbllsTaskRepository AbllsTaskRepository { get; }
-        IAbllsVideoRepository AbllsVideoRepository { get; }
         IBlogPostRepository BlogPostRepository { get; }
         IBlogCommentRepository BlogCommentRepository { get; }
         IReinforcementProgramRepository ReinforcementProgramRepository { get; }
         IReinforcerAgentRepository ReinforcerAgentRepository { get; }
         IOtpCodeRepository OtpCodeRepository { get; }
         ICategoryRepository CategoryRepository { get; }
+        IEvaluationCriteriaRepository EvaluationCriteriaRepository { get; }
+        IMaterialPhotoRepository MaterialPhotoRepository { get; }
+        IBaselineContentRepository BaselineContentRepository { get; }
+        IEvaluationCriteriaMaterialRepository EvaluationCriteriaMaterialRepository { get; }
 
         Task CommitAsync();
         Task RollbackAsync();

@@ -1,6 +1,6 @@
 ﻿// DbContext for ABA schema
 using abaBackOffice.Configurations;
-//using DocumentsAPI.Interfaces.Services;
+using abaBackOffice.Interfaces.Services;
 using abaBackOffice.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +10,7 @@ namespace abaBackOffice.DataAccessLayer
     {
         //private readonly ICurrentUserService _currentUserService;
 
-        public AbaDbContext(DbContextOptions<AbaDbContext> options /*ICurrentUserService currentUserService*/)
+        public AbaDbContext(DbContextOptions<AbaDbContext> options/* ICurrentUserService currentUserService*/)
             : base(options)
         {
             //_currentUserService = currentUserService;
@@ -22,13 +22,16 @@ namespace abaBackOffice.DataAccessLayer
         public DbSet<Video> Videos { get; set; }
         public DbSet<Document> Documents { get; set; }
         public DbSet<AbllsTask> AbllsTasks { get; set; }
-        public DbSet<AbllsVideo> AbllsVideos { get; set; }
         public DbSet<BlogPost> BlogPosts { get; set; }
         public DbSet<BlogComment> BlogComments { get; set; }
         public DbSet<ReinforcementProgram> ReinforcementPrograms { get; set; }
         public DbSet<ReinforcerAgent> ReinforcerAgents { get; set; }
         public DbSet<Category> Categories { get; set; }
-
+        public DbSet<EvaluationCriteria> EvaluationCriterias { get; set; }
+        public DbSet<MaterialPhoto> MaterialPhotos { get; set; }
+        public DbSet<BaselineContent> BaselineContents { get; set; }
+        public DbSet<EvaluationCriteriaMaterial> EvaluationCriteriaMaterials { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -39,12 +42,15 @@ namespace abaBackOffice.DataAccessLayer
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<Video>());
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<Document>());
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<AbllsTask>());
-            modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<AbllsVideo>());
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<BlogPost>());
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<BlogComment>());
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<ReinforcementProgram>());
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<ReinforcerAgent>());
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<Category>());
+            modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<EvaluationCriteria>());
+            modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<MaterialPhoto>());
+            modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<BaselineContent>());
+            modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<EvaluationCriteriaMaterial>());
 
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
@@ -80,7 +86,7 @@ namespace abaBackOffice.DataAccessLayer
                 if (entry.State == EntityState.Added)
                 {
                     entity.Created_at = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
-                    //entity.Created_by = _currentUserService.GetCurrentUserId();
+                   // entity.Created_by = _currentUserService.GetCurrentUserId();
                     entity.Updated_at = null;
                     entity.Updated_by = null;
                     entity.RowVersion = 1;

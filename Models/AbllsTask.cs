@@ -2,43 +2,60 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace abaBackOffice.Models
+[Table("ablls_tasks", Schema = "core")]
+public class AbllsTask : Auditable
 {
-    [Table("abllstasks", Schema = "core")]
-    public class AbllsTask : Auditable
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("id")]
-        public int Id { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [Column("id")]
+    public int Id { get; set; }
 
-        [MaxLength(20)]
-        [Column("reference")]
-        public string Reference { get; set; }
+    [Required, MaxLength(10)]
+    [Column("code")]
+    public string Code { get; set; }
 
-        [Required, MaxLength(255)]
-        [Column("title")]
-        public string Title { get; set; }
+    [Column("reference")]
+    public string? Reference { get; set; }
 
-        [Column("description")]
-        public string Description { get; set; }
+    [Required]
+    [Column("title")]
+    public string Title { get; set; }
 
-        [MaxLength(100)]
-        [Column("domain")]
-        public string Domain { get; set; }
+    [Column("description")]
+    public string? Description { get; set; }
 
-        [Column("baselinetext")]
-        public string BaselineText { get; set; }
+    [Column("domain")]
+    public string? Domain { get; set; }
 
-        [Column("baselinevideo")]
-        public string BaselineVideo { get; set; }
+    // 🎬 Vidéo explicative
+    [Column("use_external_explanation_video")]
+    public bool UseExternalExplanationVideo { get; set; } = true;
 
-        [Column("materials", TypeName = "jsonb")]
-        public string[] Materials { get; set; }  // Requires Npgsql + configuration for EF Core
+    [Column("explanation_video_url")]
+    public string? ExplanationVideoUrl { get; set; }
 
-        [Column("instructions")]
-        public string Instructions { get; set; }
+    [Column("explanation_video_path")]
+    public string? ExplanationVideoPath { get; set; }
 
-        public ICollection<AbllsVideo> AbllsVideos { get; set; }
-    }
+    [Column("explanation_thumbnail_url")]
+    public string? ExplanationThumbnailUrl { get; set; }
+
+    [Column("evaluation_scoring")]
+    public string? EvaluationScoring { get; set; }
+
+    [Column("example_consigne")]
+    public string? ExampleConsigne { get; set; }
+
+    [Column("expected_response_type")]
+    public string? ExpectedResponseType { get; set; }
+
+    [Column("guidance_type")]
+    public string? GuidanceType { get; set; }
+
+    [Column("baseline_text")]
+    public string? BaselineText { get; set; }
+
+    public ICollection<EvaluationCriteria> EvaluationCriterias { get; set; } = [];
+    public ICollection<MaterialPhoto> MaterialPhotos { get; set; } = [];
+    public ICollection<BaselineContent> BaselineContents { get; set; } = [];
 }

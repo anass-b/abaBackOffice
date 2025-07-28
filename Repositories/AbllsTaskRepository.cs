@@ -1,5 +1,4 @@
-﻿// -------------------- AbllsTaskRepository --------------------
-using abaBackOffice.DataAccessLayer;
+﻿using abaBackOffice.DataAccessLayer;
 using abaBackOffice.Interfaces.Repositories;
 using abaBackOffice.Models;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +22,9 @@ namespace abaBackOffice.Repositories
             {
                 _logger.LogInformation("Retrieving all ABLLS tasks from database");
                 return await _context.AbllsTasks
+                    .Include(t => t.EvaluationCriterias)
+                    .Include(t => t.MaterialPhotos)
+                    .Include(t => t.BaselineContents)
                     .AsNoTracking()
                     .ToListAsync();
             }
@@ -33,12 +35,16 @@ namespace abaBackOffice.Repositories
             }
         }
 
-        public async Task<AbllsTask> GetByIdAsync(int id)
+        public async Task<AbllsTask?> GetByIdAsync(int id)
         {
             try
             {
                 _logger.LogInformation($"Retrieving ABLLS task with id {id} from database");
-                return await _context.AbllsTasks.FindAsync(id);
+                return await _context.AbllsTasks
+                    .Include(t => t.EvaluationCriterias)
+                    .Include(t => t.MaterialPhotos)
+                    .Include(t => t.BaselineContents)
+                    .FirstOrDefaultAsync(t => t.Id == id);
             }
             catch (Exception ex)
             {
@@ -92,6 +98,5 @@ namespace abaBackOffice.Repositories
                 throw;
             }
         }
-
     }
 }

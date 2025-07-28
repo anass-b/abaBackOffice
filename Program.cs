@@ -33,7 +33,6 @@ builder.Services.Configure<EncryptionOptions>(
 
 // Register Services
 builder.Services.AddScoped<IAbllsTaskService, AbllsTaskService>();
-builder.Services.AddScoped<IAbllsVideoService, AbllsVideoService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IBlogCommentService, BlogCommentService>();
 builder.Services.AddScoped<IBlogPostService, BlogPostService>();
@@ -47,10 +46,13 @@ builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IVideoService, VideoService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IEvaluationCriteriaService, EvaluationCriteriaService>();
+builder.Services.AddScoped<IMaterialPhotoService, MaterialPhotoService>();
+builder.Services.AddScoped<IBaselineContentService, BaselineContentService>();
+builder.Services.AddScoped<IEvaluationCriteriaMaterialService, EvaluationCriteriaMaterialService>();
 
 // Register Repositories
 builder.Services.AddScoped<IAbllsTaskRepository, AbllsTaskRepository>();
-builder.Services.AddScoped<IAbllsVideoRepository, AbllsVideoRepository>();
 builder.Services.AddScoped<IBlogCommentRepository, BlogCommentRepository>();
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
@@ -61,6 +63,10 @@ builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IVideoRepository, VideoRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IEvaluationCriteriaRepository, EvaluationCriteriaRepository>();
+builder.Services.AddScoped<IMaterialPhotoRepository, MaterialPhotoRepository>();
+builder.Services.AddScoped<IBaselineContentRepository ,  BaselineContentRepository>();
+builder.Services.AddScoped<IEvaluationCriteriaMaterialRepository, EvaluationCriteriaMaterialRepository>();
 
 // Register Unit of Work
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
