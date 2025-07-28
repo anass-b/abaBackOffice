@@ -51,7 +51,9 @@ namespace abaBackOffice.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<EvaluationCriteriaDto>> Create([FromBody] EvaluationCriteriaDto dto)
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<EvaluationCriteriaDto>> Create([FromForm] EvaluationCriteriaDto dto)
+
         {
             _logger.LogInformation("Creating EvaluationCriteria");
             var created = await _service.CreateAsync(dto);
