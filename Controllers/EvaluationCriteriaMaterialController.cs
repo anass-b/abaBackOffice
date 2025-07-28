@@ -39,7 +39,7 @@ namespace abaBackOffice.Controllers
         {
             _logger.LogInformation("Creating new EvaluationCriteriaMaterial link");
             await _service.CreateAsync(dto);
-            return Ok();
+            return Ok(dto);
         }
 
         [HttpDelete("criteria/{criteriaId}")]
