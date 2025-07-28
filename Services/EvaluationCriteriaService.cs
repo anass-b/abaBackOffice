@@ -1,8 +1,9 @@
-﻿using AutoMapper;
-using abaBackOffice.DTOs;
+﻿using abaBackOffice.DTOs;
 using abaBackOffice.Interfaces;
 using abaBackOffice.Interfaces.Services;
 using abaBackOffice.Models;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace abaBackOffice.Services
@@ -70,7 +71,7 @@ namespace abaBackOffice.Services
         {
             try
             {
-                // 🎬 Vidéo démonstration (si interne)
+                // 🎬 Vidéo démonstration (uploadée localement)
                 if (!dto.UseExternalDemonstrationVideo && dto.DemonstrationVideoFile != null)
                 {
                     var videoName = Guid.NewGuid() + Path.GetExtension(dto.DemonstrationVideoFile.FileName);
@@ -94,14 +95,12 @@ namespace abaBackOffice.Services
                     dto.DemonstrationThumbnailUrl = "/" + thumbPath.Replace("\\", "/");
                 }
 
-                // 🎯 Mapping
+                // 🎯 Mapping + création de l'entité
                 var entity = _mapper.Map<EvaluationCriteria>(dto);
                 await _unitOfWork.EvaluationCriteriaRepository.CreateAsync(entity);
+                await _unitOfWork.CommitAsync(); // 🔑 ID maintenant disponible
 
-                // 🧾 On commit d'abord pour obtenir entity.Id correct
-                await _unitOfWork.CommitAsync();
-
-                // 📎 Association MaterialPhotoIds
+                // 📎 Lier les MaterialPhotoIds
                 if (dto.MaterialPhotoIds != null && dto.MaterialPhotoIds.Any())
                 {
                     _logger.LogInformation("⛓ MaterialPhotoIds liés au critère : {@MaterialPhotoIds}", dto.MaterialPhotoIds);
@@ -110,7 +109,7 @@ namespace abaBackOffice.Services
                     {
                         var link = new EvaluationCriteriaMaterial
                         {
-                            EvaluationCriteriaId = entity.Id, // ✅ ID réel après commit
+                            EvaluationCriteriaId = entity.Id,
                             MaterialPhotoId = materialId
                         };
                         await _unitOfWork.EvaluationCriteriaMaterialRepository.CreateAsync(link);
@@ -123,7 +122,17 @@ namespace abaBackOffice.Services
                     _logger.LogWarning("⚠️ Aucun MaterialPhotoId fourni pour le critère avec label : {Label}", dto.Label);
                 }
 
-                return _mapper.Map<EvaluationCriteriaDto>(entity);
+                // 🔄 Recharge des IDs liés depuis la base pour les renvoyer dans le DTO
+                var materialIds = await _unitOfWork.EvaluationCriteriaMaterialRepository
+                    .GetQueryable()
+                    .Where(x => x.EvaluationCriteriaId == entity.Id)
+                    .Select(x => x.MaterialPhotoId)
+                    .ToListAsync();
+
+                dto.Id = entity.Id;
+                dto.MaterialPhotoIds = materialIds;
+
+                return dto;
             }
             catch (Exception ex)
             {
@@ -131,6 +140,7 @@ namespace abaBackOffice.Services
                 throw;
             }
         }
+
 
 
 

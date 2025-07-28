@@ -81,5 +81,10 @@ namespace abaBackOffice.Repositories
                 throw;
             }
         }
+        public IQueryable<EvaluationCriteriaMaterial> GetQueryable()
+        {
+            return _context.EvaluationCriteriaMaterials.AsQueryable();
+        }
+
     }
 }

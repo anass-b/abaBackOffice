@@ -8,5 +8,6 @@ namespace abaBackOffice.Interfaces.Repositories
         Task<IEnumerable<EvaluationCriteriaMaterial>> GetByCriteriaIdAsync(int criteriaId);
         Task CreateAsync(EvaluationCriteriaMaterial entity);
         Task DeleteByCriteriaIdAsync(int criteriaId);
+        IQueryable<EvaluationCriteriaMaterial> GetQueryable();
     }
 }
