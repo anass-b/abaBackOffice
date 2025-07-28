@@ -51,6 +51,8 @@ namespace abaBackOffice.DataAccessLayer
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<MaterialPhoto>());
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<BaselineContent>());
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<EvaluationCriteriaMaterial>());
+            modelBuilder.Entity<EvaluationCriteriaMaterial>()
+        .HasKey(x => new { x.EvaluationCriteriaId, x.MaterialPhotoId });
 
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
