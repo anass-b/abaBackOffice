@@ -7,7 +7,7 @@ namespace abaBackOffice.Interfaces.Repositories
         Task<IEnumerable<EvaluationCriteria>> GetAllAsync();
         Task<EvaluationCriteria?> GetByIdAsync(int id);
         Task<IEnumerable<EvaluationCriteria>> GetByTaskIdAsync(int taskId);
-        Task CreateAsync(EvaluationCriteria entity);
+        Task<EvaluationCriteria> CreateAsync(EvaluationCriteria entity);
         Task UpdateAsync(EvaluationCriteria entity);
         Task DeleteAsync(int id);
     }

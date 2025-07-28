@@ -68,12 +68,14 @@ namespace abaBackOffice.Repositories
             }
         }
 
-        public async Task CreateAsync(EvaluationCriteria entity)
+        public async Task<EvaluationCriteria> CreateAsync(EvaluationCriteria entity)
         {
             try
             {
                 _logger.LogInformation("Creating EvaluationCriteria");
                 await _context.EvaluationCriterias.AddAsync(entity);
+                await _context.SaveChangesAsync(); // ⚠️ obligatoire pour générer l'ID
+                return entity;
             }
             catch (Exception ex)
             {
@@ -81,6 +83,7 @@ namespace abaBackOffice.Repositories
                 throw;
             }
         }
+
 
         public async Task UpdateAsync(EvaluationCriteria entity)
         {

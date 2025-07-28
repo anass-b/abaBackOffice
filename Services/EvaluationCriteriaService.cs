@@ -152,23 +152,24 @@ namespace abaBackOffice.Services
                 }
 
                 // 🧠 Mapping principal
-                var entity = _mapper.Map<EvaluationCriteria>(dto);
+                var entity = await _unitOfWork.EvaluationCriteriaRepository.CreateAsync(_mapper.Map<EvaluationCriteria>(dto));
 
-                // 🔄 Supprimer anciennes associations matériels
-                await _unitOfWork.EvaluationCriteriaMaterialRepository.DeleteByCriteriaIdAsync(entity.Id);
-
-                // ➕ Recréer les nouvelles liaisons à partir de MaterialPhotoIds
+                // 📎 Créer les liens une fois qu'on a un ID valide
                 if (dto.MaterialPhotoIds != null && dto.MaterialPhotoIds.Any())
                 {
-                    entity.EvaluationCriteriaMaterials = dto.MaterialPhotoIds.Select(id => new EvaluationCriteriaMaterial
+                    foreach (var materialId in dto.MaterialPhotoIds)
                     {
-                        EvaluationCriteriaId = entity.Id,
-                        MaterialPhotoId = id
-                    }).ToList();
+                        var link = new EvaluationCriteriaMaterial
+                        {
+                            EvaluationCriteriaId = entity.Id, // maintenant OK
+                            MaterialPhotoId = materialId
+                        };
+                        await _unitOfWork.EvaluationCriteriaMaterialRepository.CreateAsync(link);
+                    }
+
+                    await _unitOfWork.CommitAsync(); // commit des liaisons
                 }
 
-                await _unitOfWork.EvaluationCriteriaRepository.UpdateAsync(entity);
-                await _unitOfWork.CommitAsync();
 
                 return _mapper.Map<EvaluationCriteriaDto>(entity);
             }
