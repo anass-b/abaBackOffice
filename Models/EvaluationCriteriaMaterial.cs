@@ -1,19 +1,22 @@
-﻿using abaBackOffice.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using abaBackOffice.Models;
 
 [Table("evaluation_criteria_material", Schema = "core")]
 public class EvaluationCriteriaMaterial : Auditable
 {
-    [Key, Column("evaluation_criteria_id", Order = 0)]
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [Column("id")]
+    public int Id { get; set; }
+
+    [ForeignKey("EvaluationCriteria")]
+    [Column("evaluation_criteria_id")]
     public int EvaluationCriteriaId { get; set; }
+    public EvaluationCriteria EvaluationCriteria { get; set; }
 
-    [Key, Column("material_photo_id", Order = 1)]
+    [ForeignKey("MaterialPhoto")]
+    [Column("material_photo_id")]
     public int MaterialPhotoId { get; set; }
-
-    [ForeignKey(nameof(EvaluationCriteriaId))]
-    public EvaluationCriteria EvaluationCriteria { get; set; } = null!;
-
-    [ForeignKey(nameof(MaterialPhotoId))]
-    public MaterialPhoto MaterialPhoto { get; set; } = null!;
+    public MaterialPhoto MaterialPhoto { get; set; }
 }

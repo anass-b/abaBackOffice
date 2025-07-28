@@ -8,12 +8,12 @@ namespace abaBackOffice.DataAccessLayer
 {
     public class AbaDbContext : DbContext
     {
-        //private readonly ICurrentUserService _currentUserService;
+        private readonly ICurrentUserService _currentUserService;
 
-        public AbaDbContext(DbContextOptions<AbaDbContext> options/* ICurrentUserService currentUserService*/)
+        public AbaDbContext(DbContextOptions<AbaDbContext> options, ICurrentUserService currentUserService)
             : base(options)
         {
-            //_currentUserService = currentUserService;
+            _currentUserService = currentUserService;
         }
 
         public DbSet<User> Users { get; set; }
@@ -51,18 +51,6 @@ namespace abaBackOffice.DataAccessLayer
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<MaterialPhoto>());
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<BaselineContent>());
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<EvaluationCriteriaMaterial>());
-            modelBuilder.Entity<EvaluationCriteriaMaterial>()
-     .HasKey(e => new { e.EvaluationCriteriaId, e.MaterialPhotoId });
-
-            modelBuilder.Entity<EvaluationCriteriaMaterial>()
-                .Property(e => e.EvaluationCriteriaId)
-                .HasColumnName("evaluation_criteria_id");
-
-            modelBuilder.Entity<EvaluationCriteriaMaterial>()
-                .Property(e => e.MaterialPhotoId)
-                .HasColumnName("material_photo_id");
-
-
 
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
@@ -98,7 +86,7 @@ namespace abaBackOffice.DataAccessLayer
                 if (entry.State == EntityState.Added)
                 {
                     entity.Created_at = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
-                    entity.Created_by = 1; /*_currentUserService.GetCurrentUserId();*/
+                    entity.Created_by = _currentUserService.GetCurrentUserId();
                     entity.Updated_at = null;
                     entity.Updated_by = null;
                     entity.RowVersion = 1;
@@ -106,7 +94,7 @@ namespace abaBackOffice.DataAccessLayer
                 else if (entry.State == EntityState.Modified)
                 {
                     entity.Updated_at = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
-                    entity.Updated_by = 1; /*_currentUserService.GetCurrentUserId();*/
+                    entity.Updated_by = _currentUserService.GetCurrentUserId();
                     entity.RowVersion++;
 
                     entry.Property(nameof(Auditable.Created_by)).IsModified = false;
