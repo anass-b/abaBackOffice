@@ -98,6 +98,9 @@ namespace abaBackOffice.Services
                 var entity = _mapper.Map<EvaluationCriteria>(dto);
                 await _unitOfWork.EvaluationCriteriaRepository.CreateAsync(entity);
 
+                // 🧾 On commit d'abord pour obtenir entity.Id correct
+                await _unitOfWork.CommitAsync();
+
                 // 📎 Association MaterialPhotoIds
                 if (dto.MaterialPhotoIds != null && dto.MaterialPhotoIds.Any())
                 {
@@ -107,18 +110,19 @@ namespace abaBackOffice.Services
                     {
                         var link = new EvaluationCriteriaMaterial
                         {
-                            EvaluationCriteria = entity,
+                            EvaluationCriteriaId = entity.Id, // ✅ ID réel après commit
                             MaterialPhotoId = materialId
                         };
                         await _unitOfWork.EvaluationCriteriaMaterialRepository.CreateAsync(link);
                     }
+
+                    await _unitOfWork.CommitAsync(); // commit des liaisons
                 }
                 else
                 {
                     _logger.LogWarning("⚠️ Aucun MaterialPhotoId fourni pour le critère avec label : {Label}", dto.Label);
                 }
 
-                await _unitOfWork.CommitAsync();
                 return _mapper.Map<EvaluationCriteriaDto>(entity);
             }
             catch (Exception ex)
@@ -127,6 +131,7 @@ namespace abaBackOffice.Services
                 throw;
             }
         }
+
 
 
 
