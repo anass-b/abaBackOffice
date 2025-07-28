@@ -39,6 +39,8 @@ namespace abaBackOffice.Helpers
 
             CreateMap<MaterialPhoto, MaterialPhotoDto>().ReverseMap();
             CreateMap<BaselineContent, BaselineContentDto>().ReverseMap();
+            CreateMap<EvaluationCriteriaMaterialDto, EvaluationCriteriaMaterial>().ReverseMap();
+
 
             // 🗑️ Supprimé : AbllsVideo (non utilisé dans nouvelle logique)
             // CreateMap<AbllsVideo, AbllsVideoDto>().ReverseMap();
