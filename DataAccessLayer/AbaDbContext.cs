@@ -86,7 +86,7 @@ namespace abaBackOffice.DataAccessLayer
                 if (entry.State == EntityState.Added)
                 {
                     entity.Created_at = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
-                   // entity.Created_by = _currentUserService.GetCurrentUserId();
+                    entity.Created_by = 1; /*_currentUserService.GetCurrentUserId();*/
                     entity.Updated_at = null;
                     entity.Updated_by = null;
                     entity.RowVersion = 1;
@@ -94,7 +94,7 @@ namespace abaBackOffice.DataAccessLayer
                 else if (entry.State == EntityState.Modified)
                 {
                     entity.Updated_at = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
-                   // entity.Updated_by = _currentUserService.GetCurrentUserId();
+                    entity.Updated_by = 1; /*_currentUserService.GetCurrentUserId();*/
                     entity.RowVersion++;
 
                     entry.Property(nameof(Auditable.Created_by)).IsModified = false;
