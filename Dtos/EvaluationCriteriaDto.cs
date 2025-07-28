@@ -1,4 +1,6 @@
-﻿namespace abaBackOffice.DTOs;
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace abaBackOffice.DTOs;
 public class EvaluationCriteriaDto : AuditableDto
 {
     public int? Id { get; set; }
@@ -17,6 +19,7 @@ public class EvaluationCriteriaDto : AuditableDto
     public IFormFile? DemonstrationThumbnail { get; set; }          // Miniature
     public string? DemonstrationThumbnailUrl { get; set; }
 
+    [FromForm(Name = "materialPhotoIds")]
     public List<int>? MaterialPhotoIds { get; set; }
 
 }
