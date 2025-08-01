@@ -18,6 +18,8 @@ namespace abaBackOffice.Models
 
         [Column("description")]
         public string? Description { get; set; }
+        public ICollection<Domain> Domains { get; set; } = new List<Domain>();
+
     }
 
 }

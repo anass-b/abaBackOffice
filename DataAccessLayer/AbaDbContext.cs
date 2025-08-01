@@ -31,6 +31,7 @@ namespace abaBackOffice.DataAccessLayer
         public DbSet<MaterialPhoto> MaterialPhotos { get; set; }
         public DbSet<BaselineContent> BaselineContents { get; set; }
         public DbSet<EvaluationCriteriaMaterial> EvaluationCriteriaMaterials { get; set; }
+        public DbSet<Domain> Domains { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -51,6 +52,7 @@ namespace abaBackOffice.DataAccessLayer
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<MaterialPhoto>());
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<BaselineContent>());
             modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<EvaluationCriteriaMaterial>());
+            modelBuilder.ApplyConfiguration(new AuditableEntityConfiguration<Domain>());
 
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {

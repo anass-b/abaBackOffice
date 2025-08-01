@@ -8,28 +8,36 @@ namespace abaBackOffice.Helpers
     {
         public AbaAutoMapperProfile()
         {
-            // 🔐 Auth / Users
+            
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<OtpCode, OtpCodeDto>().ReverseMap();
 
-            // 📄 Documents / Vidéos
+            
             CreateMap<Subscription, SubscriptionDto>().ReverseMap();
             CreateMap<Video, VideoDto>().ReverseMap();
             CreateMap<Document, DocumentDto>().ReverseMap();
 
-            // 📚 Blog / Renforcement
+            
             CreateMap<BlogPost, BlogPostDto>().ReverseMap();
             CreateMap<BlogComment, BlogCommentDto>().ReverseMap();
             CreateMap<ReinforcementProgram, ReinforcementProgramDto>().ReverseMap();
             CreateMap<ReinforcerAgent, ReinforcerAgentDto>().ReverseMap();
             CreateMap<Category, CategoryDto>().ReverseMap();
 
-            // 🧠 ABLLS TASK
+            
+            CreateMap<Domain, DomainDto>().ReverseMap();
+
             CreateMap<AbllsTask, AbllsTaskDto>()
                 .ForMember(dest => dest.EvaluationCriterias, opt => opt.MapFrom(src => src.EvaluationCriterias))
                 .ForMember(dest => dest.MaterialPhotos, opt => opt.MapFrom(src => src.MaterialPhotos))
                 .ForMember(dest => dest.BaselineContents, opt => opt.MapFrom(src => src.BaselineContents))
-                .ReverseMap();
+                .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
+                .ReverseMap()
+                .ForMember(dest => dest.EvaluationCriterias, opt => opt.Ignore())
+                .ForMember(dest => dest.MaterialPhotos, opt => opt.Ignore())
+                .ForMember(dest => dest.BaselineContents, opt => opt.Ignore())
+                .ForMember(dest => dest.Domain, opt => opt.Ignore());
+
 
             CreateMap<EvaluationCriteria, EvaluationCriteriaDto>()
                 .ForMember(dest => dest.MaterialPhotoIds, opt => opt.MapFrom(src =>
@@ -42,8 +50,7 @@ namespace abaBackOffice.Helpers
             CreateMap<EvaluationCriteriaMaterialDto, EvaluationCriteriaMaterial>().ReverseMap();
 
 
-            // 🗑️ Supprimé : AbllsVideo (non utilisé dans nouvelle logique)
-            // CreateMap<AbllsVideo, AbllsVideoDto>().ReverseMap();
+           
         }
     }
 }

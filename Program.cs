@@ -50,6 +50,7 @@ builder.Services.AddScoped<IEvaluationCriteriaService, EvaluationCriteriaService
 builder.Services.AddScoped<IMaterialPhotoService, MaterialPhotoService>();
 builder.Services.AddScoped<IBaselineContentService, BaselineContentService>();
 builder.Services.AddScoped<IEvaluationCriteriaMaterialService, EvaluationCriteriaMaterialService>();
+builder.Services.AddScoped<IDomainService ,  DomainService>();
 
 // Register Repositories
 builder.Services.AddScoped<IAbllsTaskRepository, AbllsTaskRepository>();
@@ -67,6 +68,7 @@ builder.Services.AddScoped<IEvaluationCriteriaRepository, EvaluationCriteriaRepo
 builder.Services.AddScoped<IMaterialPhotoRepository, MaterialPhotoRepository>();
 builder.Services.AddScoped<IBaselineContentRepository ,  BaselineContentRepository>();
 builder.Services.AddScoped<IEvaluationCriteriaMaterialRepository, EvaluationCriteriaMaterialRepository>();
+builder.Services.AddScoped<IDomainRepository , DomainRepository>();
 
 // Register Unit of Work
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

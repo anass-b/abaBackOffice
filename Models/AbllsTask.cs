@@ -24,8 +24,13 @@ public class AbllsTask : Auditable
     [Column("description")]
     public string? Description { get; set; }
 
-    [Column("domain")]
-    public string? Domain { get; set; }
+    [Required]
+    [ForeignKey("Domain")]
+    [Column("domain_id")]
+    public int DomainId { get; set; }
+
+    public Domain Domain { get; set; }
+    
 
     // 🎬 Vidéo explicative
     [Column("use_external_explanation_video")]
@@ -54,6 +59,13 @@ public class AbllsTask : Auditable
 
     [Column("baseline_text")]
     public string? BaselineText { get; set; }
+    [Column("expected_criteria_count")]
+    public int? ExpectedCriteriaCount { get; set; }
+
+    [Column("status")]
+    [MaxLength(50)]
+    public string? Status { get; set; } // exemple : "En cours", "Terminé"
+
 
     public ICollection<EvaluationCriteria> EvaluationCriterias { get; set; } = [];
     public ICollection<MaterialPhoto> MaterialPhotos { get; set; } = [];

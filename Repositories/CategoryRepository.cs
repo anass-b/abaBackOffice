@@ -21,22 +21,29 @@ namespace abaBackOffice.Repositories
         {
             try
             {
-                _logger.LogInformation("Retrieving all categories from database");
-                return await _context.Categories.AsNoTracking().ToListAsync();
+                _logger.LogInformation("Retrieving all categories with their domains from database");
+                return await _context.Categories
+                    .Include(c => c.Domains) 
+                    .AsNoTracking()
+                    .ToListAsync();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error retrieving categories");
+                _logger.LogError(ex, "Error retrieving categories with domains");
                 throw;
             }
         }
+
 
         public async Task<Category> GetByIdAsync(int id)
         {
             try
             {
                 _logger.LogInformation($"Retrieving category with id {id}");
-                return await _context.Categories.FindAsync(id);
+                return await _context.Categories
+                .Include(c => c.Domains)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
             }
             catch (Exception ex)
             {

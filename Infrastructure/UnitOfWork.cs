@@ -29,6 +29,7 @@ namespace abaBackOffice.Infrastructure
         private readonly ILogger<MaterialPhotoRepository> _materialPhotoLogger;
         private readonly ILogger<BaselineContentRepository> _baselineContentLogger;
         private readonly ILogger<EvaluationCriteriaMaterialRepository> _evaluationCriteriaMaterialLogger;
+        private readonly ILogger<DomainRepository> _domainLogger;
 
         private IUserRepository _userRepository;
         private IDocumentRepository _documentRepository;
@@ -45,6 +46,7 @@ namespace abaBackOffice.Infrastructure
         private IMaterialPhotoRepository _materialPhotoRepository;
         private IBaselineContentRepository _baselineContentRepository;
         private IEvaluationCriteriaMaterialRepository _evaluationCriteriaMaterialRepository;
+        private IDomainRepository _domainRepository;
 
         private IDbContextTransaction _transaction;
 
@@ -65,7 +67,8 @@ namespace abaBackOffice.Infrastructure
             ILogger<EvaluationCriteriaRepository> evaluationCriteriaLogger,
             ILogger<MaterialPhotoRepository> materialPhotoLogger,
             ILogger<BaselineContentRepository> baselineContentLogger,
-            ILogger<EvaluationCriteriaMaterialRepository> evaluationCriteriaMaterialLogger
+            ILogger<EvaluationCriteriaMaterialRepository> evaluationCriteriaMaterialLogger,
+            ILogger<DomainRepository> domainLogger
         )
         {
             _context = context;
@@ -84,6 +87,7 @@ namespace abaBackOffice.Infrastructure
             _materialPhotoLogger = materialPhotoLogger;
             _baselineContentLogger = baselineContentLogger;
             _evaluationCriteriaMaterialLogger = evaluationCriteriaMaterialLogger;
+            _domainLogger = domainLogger;
         }
 
         public IUserRepository UserRepository => _userRepository ??= new UserRepository(_context, _userLogger);
@@ -101,6 +105,7 @@ namespace abaBackOffice.Infrastructure
         public IMaterialPhotoRepository MaterialPhotoRepository => _materialPhotoRepository ??= new MaterialPhotoRepository(_context, _materialPhotoLogger);
         public IBaselineContentRepository BaselineContentRepository => _baselineContentRepository ??= new BaselineContentRepository(_context, _baselineContentLogger);
         public IEvaluationCriteriaMaterialRepository EvaluationCriteriaMaterialRepository => _evaluationCriteriaMaterialRepository ??= new EvaluationCriteriaMaterialRepository(_context, _evaluationCriteriaMaterialLogger);
+        public IDomainRepository DomainRepository => _domainRepository ??= new DomainRepository(_context, _domainLogger);
         public async Task BeginTransactionAsync()
         {
             _transaction = await _context.Database.BeginTransactionAsync();

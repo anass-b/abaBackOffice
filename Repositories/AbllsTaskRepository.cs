@@ -22,11 +22,13 @@ namespace abaBackOffice.Repositories
             {
                 _logger.LogInformation("Retrieving all ABLLS tasks from database");
                 return await _context.AbllsTasks
+                    .Include(t => t.Domain)
                     .Include(t => t.EvaluationCriterias)
                     .Include(t => t.MaterialPhotos)
                     .Include(t => t.BaselineContents)
                     .AsNoTracking()
                     .ToListAsync();
+
             }
             catch (Exception ex)
             {
@@ -41,6 +43,7 @@ namespace abaBackOffice.Repositories
             {
                 _logger.LogInformation($"Retrieving ABLLS task with id {id} from database");
                 return await _context.AbllsTasks
+                    .Include(t => t.Domain)
                     .Include(t => t.EvaluationCriterias)
                     .Include(t => t.MaterialPhotos)
                     .Include(t => t.BaselineContents)

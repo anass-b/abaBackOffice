@@ -21,6 +21,7 @@ namespace abaBackOffice.Interfaces
         IMaterialPhotoRepository MaterialPhotoRepository { get; }
         IBaselineContentRepository BaselineContentRepository { get; }
         IEvaluationCriteriaMaterialRepository EvaluationCriteriaMaterialRepository { get; }
+        IDomainRepository DomainRepository { get; }
 
         Task CommitAsync();
         Task RollbackAsync();

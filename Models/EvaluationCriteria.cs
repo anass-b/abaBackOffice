@@ -41,6 +41,6 @@ public class EvaluationCriteria : Auditable
     public string? DemonstrationThumbnailUrl { get; set; }
 
 
-    // ✅ Relation many-to-many avec MaterialPhoto
+    
     public ICollection<EvaluationCriteriaMaterial> EvaluationCriteriaMaterials { get; set; } = new List<EvaluationCriteriaMaterial>();
 }
